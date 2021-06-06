@@ -1,3 +1,5 @@
+//Con React. Pedir al usuario que indique la operación que desea realizar y el monto y mostrarle la conversión (pesos > dólares o dólares >pesos).
+//Obtener la cotización de https://www.dolarsi.com/api/api.php?type=valoresprincipales de Dolar Oficial.
 import React, { useState,useEffect,useRef} from 'react';
 import ReactDOM from 'react-dom';
 const Dolar = () =>{

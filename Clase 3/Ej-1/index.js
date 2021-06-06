@@ -1,3 +1,11 @@
+//Con React (sin rutas): mostrar todos los usuarios de https://jsonplaceholder.typicode.com/users cuyo name comienza con C
+//Los datos a mostrar son:
+//Nombre
+//Email
+//website
+//company name
+//company catchPhrase
+
 import React, { useState,useEffect } from 'react';
 import ReactDOM from 'react-dom';
 

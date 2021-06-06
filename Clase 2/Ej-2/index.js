@@ -35,7 +35,7 @@ const Componente = () => {
     <header><h1>Conversión de Criptomonedas</h1></header>
     <form>
       <label>USD :</label>
-      <input type="number" placeholder="Ingrese su importecen dólares" ref={ingresado}/>
+      <input type="number" placeholder="Ingrese su importe en dólares" ref={ingresado}/>
       <select ref={elegido}>
         <option value="0">Elegir...</option>
         <option value="5">Coins 1</option>

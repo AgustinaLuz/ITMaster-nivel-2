@@ -1,63 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Switch, Route, Link, useParams } from 'react-router-dom'
 
-const Paises = () => {
-  const [paises, setPaises] = useState([])
+//Home
+const Libros = () => {
+    const [libros, setLibros] = useState([])
+    const getLibros = () => {
+        fetch('https://raw.githubusercontent.com/bvaughn/infinite-list-reflow-examples/master/books.json')
+        .then(response => response.json())
+        .then(libros => setLibros(libros))
+        .catch(err => console.log(err.message))
+    }
 
-  const getPaises = () => {
-    fetch('https://raw.githubusercontent.com/russ666/all-countries-and-cities-json/6ee538beca8914133259b401ba47a550313e8984/countries.json')
-      .then(response => response.json())
-      .then(paises => setPaises(paises))
-      .catch(errores => console.log(errores))
-  }
+    useEffect(() => { getLibros();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    getPaises()
-  }, [])
-
-  const paiseskeys = Object.keys(paises)
-  return(
-    <ul>
-      { paiseskeys.filter(pais => pais[0].toUpperCase() ==='A').map((pais, i) => <li key={i}><Link to={'/pais/'+pais}>{pais}</Link></li>) }
-    </ul>
-  )
+    return (
+        <ul>
+            { libros.map((libro, i) => <li key={i}><Link to={'/libro/'+libro.isbn}>{libro.title}</Link></li>)}
+        </ul>
+    )
 }
 
-const Pais = () => {
-  const [pais, setPais] = useState([]);
-  const parametros = useParams();
-  const getPais = () => {
-    fetch('https://raw.githubusercontent.com/russ666/all-countries-and-cities-json/6ee538beca8914133259b401ba47a550313e8984/countries.json')
-      .then(response => response.json())
-      .then(pais => setPais(pais))
-      .catch(errores => console.log(errores))
-  }
+const Libro = () => {
+    const [libro, setLibro] = useState([]);
+    const parametros = useParams();
+    const getLibro = () => {
+    fetch('https://raw.githubusercontent.com/bvaughn/infinite-list-reflow-examples/master/books.json')
+        .then(response => response.json())
+        .then(libro => setLibro(libro))
+        .catch(err => console.log(err.message))
+    
+    }
 
-  useEffect(() => {getPais()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    useEffect(() => {
+              // eslint-disable-next-line react-hooks/exhaustive-deps
+        getLibro()
+    }, [])
 
-  return(
-         <>
-
-          <> Ciudades: <ul>{ pais[parametros.ispa]? pais[parametros.ispa].map((pais,i) => <li key={i}>{pais}</li>):null }</ul> </>
-          <Link to='/'>Regresar al Home</Link>
-          
-         </>
-  )
+         return (
+             <>
+             {libro.filter((libro) => libro.isbn === parametros.isbn).map((libro, i) =>
+             <article key={i}>
+                 <h2 key={libro.isbn}>Titulo: {libro.title}</h2>
+                 <p>Isbn: {libro.isbn}</p>
+                 <p>Páginas: {libro.pageCount}</p>
+                 <img src={libro.thumbnailUrl} alt="img"></img><br/>
+                 <p>Descripción: {libro.longDescription}</p>
+                 <div>Autores: <ul>{libro.authors.map((autor,i)=><li key={i}>{autor}</li>)}</ul></div>
+                 <div>Categorias: <ul>{libro.categories.map((categoria,i)=><li key={i}>{categoria}</li>)}</ul></div>
+                </article>
+             )}
+             <Link to="/">Home</Link>
+             </>
+         )
 }
-
 
 const App = () => (
     <div className="App">
-      <header className="App-header">          
-        <h1 className="App-title">Paises</h1>
-      </header>
-      <Switch>
-        <Route exact path="/"><Paises/></Route>
-        <Route path="/pais/:ispa"><Pais/></Route>
-      </Switch>        
+        <header className="App-header">
+            <h1 className="App-title">Libros</h1>
+        </header>
+        <Switch>
+            <Route exact path="/"><Libros /></Route>
+            <Route path="/Libro/:isbn"><Libro /></Route>
+        </Switch>
     </div>
-  );
-  export default App;
+);
+ export default App;
